@@ -1,25 +1,37 @@
 services:
   - type: web
-    name: bart-excel-api
-    runtime: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python bart_production_complete.py"
+    name: bart-rag-api
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r bart-rag-platform/requirements.txt
+    startCommand: cd bart-rag-platform && uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: PORT
-        value: 8000
-      - key: ANTHROPIC_API_KEY
+      - key: DATABASE_URL
         sync: false
       - key: OPENAI_API_KEY
         sync: false
-      - key: SALESFORCE_USERNAME
+      - key: SECRET_KEY
         sync: false
-      - key: SALESFORCE_PASSWORD
+      - key: JWT_SECRET_KEY
         sync: false
-      - key: SALESFORCE_CONSUMER_KEY
+      - key: SESSION_SECRET_KEY
         sync: false
-      - key: SALESFORCE_CONSUMER_SECRET
+      - key: API_KEY_SALT
         sync: false
-      - key: AXIOM_DATASET
-        value: bart-production
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: False
+      - key: LOG_LEVEL
+        value: INFO
+      - key: CORS_ORIGINS
+        value: https://keen-profiterole-586a9f.netlify.app,http://localhost:5173
+      - key: REDIS_URL
+        value: redis://localhost:6379/0
+      - key: AWS_REGION
+        value: us-east-1
+      - key: S3_BUCKET_NAME
+        value: bart-rag-data
+      - key: PYTHON_VERSION
+        value: 3.11
