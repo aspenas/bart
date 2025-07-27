@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: bart-excel-api
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python bart_production_complete.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 8000
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SALESFORCE_USERNAME
+        sync: false
+      - key: SALESFORCE_PASSWORD
+        sync: false
+      - key: SALESFORCE_CONSUMER_KEY
+        sync: false
+      - key: SALESFORCE_CONSUMER_SECRET
+        sync: false
+      - key: AXIOM_DATASET
+        value: bart-production
